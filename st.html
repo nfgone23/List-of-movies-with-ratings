@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КиноПортал - Ваш гид в мире кино</title>
+    <style>
+        /* Базовые стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #141414;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            
+        }
+        
+        /* Шапка */
+        header {
+            background: #000000;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e50914;
+            background: linear-gradient(transparent, rgba(48, 12, 8, 0.8));
+            
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #869964;
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-bar input {
+            background: #333;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            color: #fff;
+            width: 200px;
+        }
+        
+        .user-actions a {
+            margin-left: 15px;
+        }
+        
+        /* Герой-секция */
+        .hero {
+            height: 70vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #e50914;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #b2070f;
+        }
+        
+        /* Секции с контентом */
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .see-all {
+            color: #e50914;
+            font-size: 14px;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .content-item {
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .content-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .content-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .content-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(230, 74, 74, 0.8));
+            padding: 15px;
+        }
+        
+        .content-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .content-meta {
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        /* Подвал */
+        footer {
+            background: #000000;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 25px;
+            margin-bottom: 25px;
+            color: #cc2c37;
+            text-align: center;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            text-align: center;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ffffff;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #fff;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            nav ul {
+                margin: 15px 0;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 5px 10px 5px 0;
+            }
+            
+            .search-bar {
+                width: 100%;
+                margin-top: 10px;
+            }
+            
+            .search-bar input {
+                width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .content-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">КиноПортал</a>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#">Фильмы</a></li>                        
+                        <li><a href="#">Категории</a></li>
+                        <li><a href="#">Рейтинг</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="search-bar">
+                    <input type="text" placeholder="Поиск фильмов и сериалов...">
+                </div>
+                    <li><a href="#">Добавить фильм</a></li>
+            </div>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="container">
+        <!-- Популярные фильмы -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Фильмы</h2>
+            </div>
+            <div class="content-grid">
+                <!-- Элемент фильма -->
+                <div class="content-item">
+                    <img src="#" alt="Название фильма">
+                    <div class="content-info">
+                        <div class="content-title">Название фильма</div>
+                        <div class="content-meta">2023 • Боевик • 2ч 15м</div>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <img src="https://via.placeholder.com/300x450" alt="Название фильма">
+                    <div class="content-info">
+                        <div class="content-title">Другой фильм</div>
+                        <div class="content-meta">2023 • Драма • 1ч 50м</div>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <img src="https://via.placeholder.com/300x450" alt="Название фильма">
+                    <div class="content-info">
+                        <div class="content-title">Комедийный хит</div>
+                        <div class="content-meta">2023 • Комедия • 1ч 40м</div>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <img src="https://via.placeholder.com/300x450" alt="Название фильма">
+                    <div class="content-info">
+                        <div class="content-title">Триллер</div>
+                        <div class="content-meta">2023 • Триллер • 2ч 5м</div>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <img src="https://via.placeholder.com/300x450" alt="Название фильма">
+                    <div class="content-info">
+                        <div class="content-title">Фантастика</div>
+                        <div class="content-meta">2023 • Фантастика • 2ч 30м</div>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <img src="https://via.placeholder.com/300x450" alt="Название фильма">
+                    <div class="content-info">
+                        <div class="content-title">Драма</div>
+                        <div class="content-meta">2023 • Драма • 2ч 10м</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Новые сериалы -->
+        <section class="section">
+            <div class="section-header">
+                <h2 class="section-title">Новые Фильмы</h2>
+            </div>
+            <div class="content-grid">
+                <div class="content-item">
+                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <div class="content-info">
+                        <div class="content-title">Название сериала</div>
+                        <div class="content-meta">2023 • Драма • 1 сезон</div>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <div class="content-info">
+                        <div class="content-title">Детектив</div>
+                        <div class="content-meta">2023 • Детектив • 2 сезона</div>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <div class="content-info">
+                        <div class="content-title">Комедия</div>
+                        <div class="content-meta">2023 • Комедия • 1 сезон</div>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <div class="content-info">
+                        <div class="content-title">Фантастика</div>
+                        <div class="content-meta">2023 • Фантастика • 3 сезона</div>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <div class="content-info">
+                        <div class="content-title">Ужасы</div>
+                        <div class="content-meta">2023 • Ужасы • 1 сезон</div>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <div class="content-info">
+                        <div class="content-title">Исторический</div>
+                        <div class="content-meta">2023 • История • 2 сезона</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                <div class="footer-column">
+                    <h3>Следите за нами!</h3>
+                    <ul>
+                        <li><a href="https://t.me/NyP0g0di">ВКонтакте</a></li>
+                        <li><a href="https://t.me/NyP0g0di">Telegram</a></li>
+                        <li><a href="https://t.me/NyP0g0di">YouTube</a></li>
+                        <li><a href="https://t.me/NyP0g0di">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        //  JavaScript 
+        document.addEventListener('DOMContentLoaded', function() {
+            //  наведении на элементы контента
+            const contentItems = document.querySelectorAll('.content-item');
+            
+            contentItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.zIndex = '10';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.zIndex = '1';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
