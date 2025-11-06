@@ -39,7 +39,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #3b3b3b;
         }
         
         .header-content {
@@ -51,8 +51,8 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
-            color: #e50914;
-            background: linear-gradient(transparent, rgba(48, 12, 8, 0.8));
+            color: #ff000d;
+            background: linear-gradient(270deg, #070000 0%, #1a1212 100%);
             
         }
         
@@ -297,7 +297,6 @@
                 <div class="search-bar">
                     <input type="text" placeholder="Поиск фильмов и сериалов...">
                 </div>
-                    <li><a href="#">Добавить фильм</a></li>
             </div>
         </div>
     </header>
@@ -307,6 +306,7 @@
         <!-- Популярные фильмы -->
         <section class="section">
             <div class="section-header">
+
                 <h2 class="section-title">Фильмы</h2>
             </div>
             <div class="content-grid">
@@ -318,6 +318,7 @@
                         <div class="content-meta">2023 • Боевик • 2ч 15м</div>
                     </div>
                 </div>
+                <!-- Повторить еще 5 раз для демонстрации -->
                 <div class="content-item">
                     <img src="https://via.placeholder.com/300x450" alt="Название фильма">
                     <div class="content-info">
@@ -362,6 +363,7 @@
                 <h2 class="section-title">Новые Фильмы</h2>
             </div>
             <div class="content-grid">
+                <!-- Элемент сериала -->
                 <div class="content-item">
                     <img src="https://via.placeholder.com/300x450" alt="Название сериала">
                     <div class="content-info">
@@ -369,6 +371,7 @@
                         <div class="content-meta">2023 • Драма • 1 сезон</div>
                     </div>
                 </div>
+                <!-- Повторить еще 5 раз для демонстрации -->
                 <div class="content-item">
                     <img src="https://via.placeholder.com/300x450" alt="Название сериала">
                     <div class="content-info">
@@ -403,10 +406,21 @@
                         <div class="content-title">Исторический</div>
                         <div class="content-meta">2023 • История • 2 сезона</div>
                     </div>
-                </div>
+                </div>  
+            </div>
             </div>
         </section>
-        
+
+
+        <!-- Добавление фильмов(админ) -->
+        <section>
+            <div class="main.admin">
+                <div class="admin">
+                    <button><h2>Добавление новых фильмов</h2></button>
+                </div>
+            </div>
+            
+        </section>
     </main>
 
     <!-- Подвал -->
@@ -428,9 +442,9 @@
     </footer>
 
     <script>
-        //  JavaScript 
+        // Простой JavaScript для демонстрации
         document.addEventListener('DOMContentLoaded', function() {
-            //  наведении на элементы контента
+            // Добавление эффекта при наведении на элементы контента
             const contentItems = document.querySelectorAll('.content-item');
             
             contentItems.forEach(item => {
