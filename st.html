@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!---BOOOSTRAP!!!--->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    
+    
     <title>КиноПортал - Ваш гид в мире кино</title>
     <style>
         /* Базовые стили */
@@ -41,19 +47,27 @@
             z-index: 100;
             border-bottom: 1px solid #3b3b3b;
         }
-        
+        .logo2{
+            color: #ff000d;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .logo2:hover {
+            color: #ffffff;
+        }
         .header-content {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            color: #ff000d;    
         }
         
         .logo {
-            font-size: 24px;
+            font-size: 25px;
             font-weight: bold;
             color: #ff000d;
-            background: linear-gradient(270deg, #070000 0%, #1a1212 100%);
-            
+            background: linear-gradient(270deg, #47434300 0%, #994b4b 100%);
+            border-radius: 70px;
         }
         
         nav ul {
@@ -92,18 +106,109 @@
             margin-left: 15px;
         }
         
-        /* Герой-секция */
-        .hero {
-            height: 70vh;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+        /* Герой-секция с каруселью */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 40px;
+            padding: 0 20px;
+            overflow: visible;
+        }
+
+        .carousel-slides {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
             display: flex;
             align-items: center;
-            margin-bottom: 40px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
-        
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        /* Стили для горизонтальной карусели с несколькими карточками */
+        .carousel-slides {
+            display: flex;
+            gap: 24px;/*//////////////////////////////////////////////////////////////////////////////*/
+            position: relative;
+        }
+
+        .carousel-slide.multi {
+            position: relative;
+            flex: 1;
+            min-width: 0;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            /* Улучшенное качество изображений */
+            image-rendering: -webkit-optimize-contrast;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
         .hero-content {
+            position: relative;
+            z-index: 2;
             max-width: 600px;
             padding: 0 20px;
+            margin-left: 50px;
+            
+        }
+
+        /* Стили для текста поверх изображений (без фона) */
+        .carousel-slide.multi .hero-content {
+            width: 100%;
+            padding: 30px 24px 20px 24px;
+            margin-left: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .carousel-slide.multi .hero-content h1 {
+            color: #ffffff;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 
+                         0 0 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 4px;
+            margin-top: 0;
+        }
+
+        .carousel-slide.multi .hero-content p {
+            color: #ffffff;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8), 
+                         0 0 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 4px;
+            margin-top: 0;
+        }
+
+        /* Легкий затемняющий градиент снизу для лучшей читаемости текста */
+        .carousel-slide.multi::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            pointer-events: none;
+            z-index: 1;
         }
         
         .hero h1 {
@@ -115,13 +220,72 @@
             font-size: 18px;
             margin-bottom: 30px;
         }
+
+        /* Индикаторы карусели !!!!!!!УБРАЛИ!!!!!! */
+        #carouselIndicators {
+            display: none !important;
+        }
+
+        /*.carousel-indicators {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 60px;
+            z-index: 3;
+        }*/
+
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .carousel-indicator.active {
+            background: #e50914;
+        }
+
+        /* Стрелки навигации */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(163, 154, 154, 0.123);
+            color: white;
+            border: none;
+            font-size: 30px;
+            padding: 10px 15px;
+            cursor: pointer;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.3s, background 0.3s;
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(179, 5, 5, 0.486);
+        }
+
+        
+
+        .carousel-arrow.prev {
+            left: 20px;
+        }
+
+        .carousel-arrow.next {
+            right: 20px;
+        }
         
         .btn {
             display: inline-block;
             background: #e50914;
             color: #fff;
-            padding: 10px 20px;
-            border-radius: 4px;
+            padding: 1px 16px;
+            border-radius: 40px;
             font-weight: bold;
             transition: background 0.3s;
         }
@@ -195,7 +359,26 @@
             font-size: 12px;
             color: #aaa;
         }
-        
+        .PodpiskaTXT {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+            
+            font-size: 24px;
+            font-style: italic;
+            font-weight: bold;
+            text-align: left;
+            z-index: 10;
+            max-width: 50%;
+
+        }
+
+        .PodpiskaTXT a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            display: block;
+        }
         /* Подвал */
         footer {
             background: #000000;
@@ -243,7 +426,196 @@
             color: #777;
             font-size: 14px;
         }
+
+        /* Админ панель */
+        .admin-panel {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .admin-form {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            color: #ccc;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background: #2a2a2a;
+            color: white;
+        }
+
+        .admin-btn {
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .btn1 {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff000d 10%, #ff6a00 90%);
+            color: #fff;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            padding: 8px 26px;
+            border-radius: 32px;
+            border: none;
+            box-shadow: 0 3px 12px 0 rgba(255, 0, 0, 0.18), 0 1.5px 4px 0 rgba(0,0,0,0.12);
+            transition: transform 0.16s cubic-bezier(.47,1.64,.41,.8), box-shadow 0.2s, background 0.3s;
+            text-shadow: 0 2px 8px rgba(255, 0, 0, 0.3);
+            cursor: pointer;
+            margin-top: 4px;
+        }
         
+        
+        .admin-btn:hover {
+            background: #b2070f;
+        }
+
+        .admin-btn.secondary {
+            background: #333;
+        }
+
+        .admin-btn.secondary:hover {
+            background: #555;
+        }
+
+        .movies-list {
+            margin-top: 30px;
+        }
+
+        .movie-item {
+            background: #2a2a2a;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .movie-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .movie-actions button {
+            background: #e50914;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* !!!!!!!!!!!!!!!!!!!!!!!!!Стили для подписки !!!!!!!!!!!!!!!!!!!!!!!!!!*/
+        section:has(.Podpiska) {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            padding: 0;
+        }
+
+        .Podpiska {
+            width: 100%;
+            margin: 40px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .Podpiska img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            max-width: 100%;
+        }
+
+        /* Адаптивность для планшетов */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .carousel-container {
+                padding: 0 20px;
+            }
+
+            .carousel-slide.multi {
+                height: 450px;
+                min-height: 450px;
+            }
+
+            .carousel-slide.multi .hero-content h1 {
+                font-size: 28px;
+            }
+
+            .carousel-slide.multi .hero-content p {
+                font-size: 15px;
+            }
+
+            .PodpiskaTXT {
+                font-size: 20px;
+                left: 4%;
+                max-width: 55%;
+            }
+        }
+
+        /* Оптимизация для больших экранов (ПК) */
+        @media (min-width: 1200px) {
+            .carousel-container {
+                max-width: 1400px;
+                margin: 0 auto 40px;
+                padding: 0 20px;
+            }
+
+            .carousel-slide.multi {
+                height: 550px;
+                min-height: 550px;
+            }
+
+            .carousel-slides {
+                gap: 30px;
+            }
+
+            .PodpiskaTXT {
+                font-size: 28px;
+                left: 6%;
+                max-width: 45%;
+            }
+        }
+
         /* Адаптивность */
         @media (max-width: 768px) {
             .header-content {
@@ -268,87 +640,254 @@
             .search-bar input {
                 width: 100%;
             }
-            
+
+            .carousel-container {
+                height: auto;
+                padding: 0 15px;
+            }
+
+            /* Адаптивность для горизонтальной карусели на мобильных */
+            .carousel-slides {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .carousel-slide.multi {
+                width: 100%;
+                height: 350px;
+                min-height: 350px;
+                flex: none;
+                border-radius: 16px;
+            }
+
+            .carousel-slide.multi .hero-content {
+                padding: 20px 16px;
+            }
+
+            .carousel-slide.multi .hero-content h1 {
+                font-size: 24px;
+            }
+
+            .carousel-slide.multi .hero-content p {
+                font-size: 14px;
+            }
+
+            .hero-content {
+                margin-left: 50px;
+                padding: 0 50px;
+                padding-top: 125px;
+                font-size: 14px;
+            }
+
             .hero h1 {
-                font-size: 32px;
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            /* Скрываем стрелки навигации для горизонтальной карусели на мобильных */
+            .carousel-arrow {
+                display: none;
+            }
+
+            .carousel-indicators {
+                bottom: 15px;
             }
             
             .content-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .Podpiska {
+                margin: 30px 0;
+            }
+
+            .PodpiskaTXT {
+                font-size: 16px;
+                left: 3%;
+                max-width: 70%;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+
+        /* Адаптивность для очень маленьких экранов */
+        @media (max-width: 480px) {
+            .carousel-container {
+                padding: 0 10px;
+            }
+
+            .carousel-slides {
+                gap: 12px;
+            }
+
+            .carousel-slide.multi {
+                height: 300px;
+                min-height: 300px;
+                border-radius: 12px;
+            }
+
+            .carousel-slide.multi .hero-content {
+                padding: 16px 12px;
+            }
+
+            .carousel-slide.multi .hero-content h1 {
+                font-size: 20px;
+                margin-bottom: 4px;
+            }
+
+            .carousel-slide.multi .hero-content p {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            /* Уменьшаем градиент для маленьких экранов */
+            .carousel-slide.multi::after {
+                height: 70%;
+            }
+
+            .PodpiskaTXT {
+                font-size: 14px;
+                left: 2%;
+                max-width: 80%;
+                line-height: 1.4;
+            }
+        }
+
+        /* Улучшение качества изображений для Retina дисплеев */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .carousel-slide.multi {
+                background-size: cover;
+                background-position: center center;
+            }
+        }
+
+        /* Оптимизация для горизонтальной ориентации на мобильных */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .carousel-slide.multi {
+                height: 300px;
+                min-height: 300px;
+            }
         }
     </style>
 </head>
+
+
+
 <body>
+    <!---BOOOSTRAP!!!--->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
     <!-- Шапка сайта -->
     <header>
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo">КиноПортал</a>
-                
+                <a href="#" class="logo">ㅤＫＩＮＯ ｐｏｒｔａｌ</a>
                 <nav>
                     <ul>
-                        <li><a href="#">Фильмы</a></li>                        
-                        <li><a href="#">Категории</a></li>
-                        <li><a href="#">Рейтинг</a></li>
+                        <li><a href="#" class="logo2">Фильмы</a></li>                        
+                        <li><a href="#" class="logo2">Категории</a></li>
+                        <li><a href="#" class="logo2">Рейтингㅤ</a></li>
                     </ul>
                 </nav>
-                
-                <div class="search-bar">
-                    <input type="text" placeholder="Поиск фильмов и сериалов...">
-                </div>
             </div>
         </div>
     </header>
 
     <!-- Основной контент -->
-    <main class="container">
-        <!-- Популярные фильмы -->
+    <main>
+        <!-- Карусель -->
+        <section>
+            <div class="carousel-container">
+                <div class="carousel-slides" id="carouselSlides">
+                    <!-- Карточка 1 -->
+                    <div class="carousel-slide multi" style="background-image: url('2239419533e03475d118ef6928280a04.webp');">
+                        <div class="hero-content">
+                            <h1 style="font-size: 23px;">Лихие</h1>
+                            <p>Захватывающий боевик 2023 года.</p>
+                            <a href="#" class="btn1">Смотреть сейчас</a>
+                        </div>
+                    </div>
+                    <!-- Карточка 2 -->
+                    <div class="carousel-slide multi" style="background-image: url('210b60828393e783d3ce60d76f1e2aee.webp');">
+                        <div class="hero-content">
+                            <h1 style="font-size: 23px;">Новый блокбастер</h1>
+                            <p>Драматический фильм 2023 года.</p>
+                            <a href="#" class="btn1">Смотреть сейчас</a>
+                        </div>
+                    </div>
+                    <!-- Карточка 3 -->
+                    <div class="carousel-slide multi" style="background-image: url('c55d49f6ffff40d5102bd6ef59af58d2.webp');">
+                        <div class="hero-content">
+                            <h1 style="font-size: 23px;">Комедийный хит</h1>
+                            <p>Смешная комедия 2023 года.</p>
+                            <a href="#" class="btn1">Смотреть сейчас</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Стрелки навигации -->
+                <button class="carousel-arrow prev" onclick="changeSlide(-1)">‹</button>
+                <button class="carousel-arrow next" onclick="changeSlide(1)">›</button>
+                
+                <!-- Индикаторы -->
+                <div id="carouselIndicators"></div>
+            </div>
+        </section>
+        
+
+        <div class="container">
+        <!---Фильмы -->
         <section class="section">
             <div class="section-header">
-
                 <h2 class="section-title">Фильмы</h2>
             </div>
             <div class="content-grid">
                 <!-- Элемент фильма -->
                 <div class="content-item">
-                    <img src="#" alt="Название фильма">
+                    <img src="background.webp" alt="Название фильма">
                     <div class="content-info">
-                        <div class="content-title">Название фильма</div>
+                        <div class="content-title">Лихие</div>
                         <div class="content-meta">2023 • Боевик • 2ч 15м</div>
                     </div>
                 </div>
-                <!-- Повторить еще 5 раз для демонстрации -->
                 <div class="content-item">
-                    <img src="https://via.placeholder.com/300x450" alt="Название фильма">
+                    <img src="background (2).webp" alt="Название фильма">
                     <div class="content-info">
-                        <div class="content-title">Другой фильм</div>
+                        <div class="content-title"></div>
                         <div class="content-meta">2023 • Драма • 1ч 50м</div>
                     </div>
                 </div>
                 <div class="content-item">
-                    <img src="https://via.placeholder.com/300x450" alt="Название фильма">
+                    <img src="background (3).webp" alt="Название фильма">
                     <div class="content-info">
-                        <div class="content-title">Комедийный хит</div>
+                        <div class="content-title"></div>
                         <div class="content-meta">2023 • Комедия • 1ч 40м</div>
                     </div>
                 </div>
                 <div class="content-item">
-                    <img src="https://via.placeholder.com/300x450" alt="Название фильма">
+                    <img src="background (1).webp" alt="Название фильма">
                     <div class="content-info">
-                        <div class="content-title">Триллер</div>
-                        <div class="content-meta">2023 • Триллер • 2ч 5м</div>
+                        <div class="content-title"></div>
+                        <div class="content-meta">2023 • Комедия • 2ч 5м</div>
                     </div>
                 </div>
                 <div class="content-item">
-                    <img src="https://via.placeholder.com/300x450" alt="Название фильма">
+                    <img src="300x450.webp" alt="Название фильма">
                     <div class="content-info">
-                        <div class="content-title">Фантастика</div>
-                        <div class="content-meta">2023 • Фантастика • 2ч 30м</div>
+                        <div class="content-title"></div>
+                        <div class="content-meta">2023 • Комедия • 2ч 30м</div>
                     </div>
                 </div>
                 <div class="content-item">
-                    <img src="https://via.placeholder.com/300x450" alt="Название фильма">
+                    <img src="300x450 (1).webp" alt="Название фильма">
                     <div class="content-info">
                         <div class="content-title">Драма</div>
                         <div class="content-meta">2023 • Драма • 2ч 10м</div>
@@ -357,7 +896,31 @@
             </div>
         </section>
 
-        <!-- Новые сериалы -->
+
+
+        <section>
+            <div class="Podpiska">
+                
+                <img src="5aff0bb19901e49b0a9d222d22c45661.png" alt="">
+                <div class="PodpiskaTXT">
+                    <div>
+                        <div>
+                            <a href="#">Открой все возможности ＫＩＮＯｐｏｒｔａｌa</a>
+                            <div style="display: flex; justify-content: center;">
+                                <button class="btn">Подписка</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <!-- Новые Фильмы -->
         <section class="section">
             <div class="section-header">
                 <h2 class="section-title">Новые Фильмы</h2>
@@ -365,69 +928,147 @@
             <div class="content-grid">
                 <!-- Элемент сериала -->
                 <div class="content-item">
-                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <img src="300x450 (2).webp" alt="Название сериала">
                     <div class="content-info">
-                        <div class="content-title">Название сериала</div>
+                        <div class="content-title"></div>
                         <div class="content-meta">2023 • Драма • 1 сезон</div>
                     </div>
                 </div>
                 <!-- Повторить еще 5 раз для демонстрации -->
                 <div class="content-item">
-                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <img src="300x450 (3).webp" alt="Название сериала">
                     <div class="content-info">
-                        <div class="content-title">Детектив</div>
+                        <div class="content-title"></div>
                         <div class="content-meta">2023 • Детектив • 2 сезона</div>
                     </div>
                 </div>
                 <div class="content-item">
-                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <img src="300x450 (4).webp" alt="Название сериала">
                     <div class="content-info">
-                        <div class="content-title">Комедия</div>
+                        <div class="content-title"></div>
                         <div class="content-meta">2023 • Комедия • 1 сезон</div>
                     </div>
                 </div>
                 <div class="content-item">
-                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <img src="300x450 (5).webp" alt="Название сериала">
                     <div class="content-info">
-                        <div class="content-title">Фантастика</div>
+                        <div class="content-title"></div>
                         <div class="content-meta">2023 • Фантастика • 3 сезона</div>
                     </div>
                 </div>
                 <div class="content-item">
-                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <img src="300x450 (6).webp" alt="Название сериала">
                     <div class="content-info">
-                        <div class="content-title">Ужасы</div>
+                        <div class="content-title"></div>
                         <div class="content-meta">2023 • Ужасы • 1 сезон</div>
                     </div>
                 </div>
                 <div class="content-item">
-                    <img src="https://via.placeholder.com/300x450" alt="Название сериала">
+                    <img src="300x450 (7).webp" alt="Название сериала">
                     <div class="content-info">
-                        <div class="content-title">Исторический</div>
+                        <div class="content-title"></div>
                         <div class="content-meta">2023 • История • 2 сезона</div>
                     </div>
                 </div>  
             </div>
-            </div>
         </section>
-
 
         <!-- Добавление фильмов(админ) -->
         <section>
-            <div class="main.admin">
-                <div class="admin">
-                    <button><h2>Добавление новых фильмов</h2></button>
+            <div class="admin-section">
+                <button class="admin-btn" onclick="toggleAdminPanel()">
+                    <h2>Добавление новых фильмов</h2>
+                </button>
+                
+                <div id="adminPanel" class="admin-panel">
+                    <h3>Панель управления фильмами</h3>
+                    
+                    <!-- Форма добавления фильма -->
+                    <form class="admin-form" onsubmit="addMovie(event)">
+                        <div class="form-group">
+                            <label for="movieTitle">Название фильма</label>
+                            <input type="text" id="movieTitle" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="movieRating">Рейтинг (1-10)</label>
+                            <input type="number" id="movieRating" min="1" max="10" step="0.1" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="movieGenre">Жанр</label>
+                            <select id="movieGenre" required>
+                                <option value="">Выберите жанр</option>
+                                <option value="Боевик">Боевик</option>
+                                <option value="Драма">Драма</option>
+                                <option value="Комедия">Комедия</option>
+                                <option value="Триллер">Триллер</option>
+                                <option value="Фантастика">Фантастика</option>
+                                <option value="Ужасы">Ужасы</option>
+                                <option value="Детектив">Детектив</option>
+                                <option value="Исторический">Исторический</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="movieYear">Год выпуска</label>
+                            <input type="number" id="movieYear" min="1900" max="2030" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="movieDescription">Описание</label>
+                            <textarea id="movieDescription" rows="3"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="admin-btn">Добавить фильм</button>
+                    </form>
+
+                    <!-- Фильтрация -->
+                    <div class="filters">
+                        <div class="form-group">
+                            <label for="filterGenre">Фильтр по жанру</label>
+                            <select id="filterGenre" onchange="filterMovies()">
+                                <option value="">Все жанры</option>
+                                <option value="Боевик">Боевик</option>
+                                <option value="Драма">Драма</option>
+                                <option value="Комедия">Комедия</option>
+                                <option value="Триллер">Триллер</option>
+                                <option value="Фантастика">Фантастика</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="filterRating">Фильтр по рейтингу</label>
+                            <select id="filterRating" onchange="filterMovies()">
+                                <option value="">Все рейтинги</option>
+                                <option value="9">9+</option>
+                                <option value="8">8+</option>
+                                <option value="7">7+</option>
+                                <option value="6">6+</option>
+                                <option value="5">5+</option>
+                                <option value="4">4+</option>
+                                <option value="3">3+</option>
+                                <option value="2">2+</option>
+                                <option value="1">1+</option>
+                                <option value="0">0+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Список фильмов -->
+                    <div class="movies-list" id="moviesList">
+                        <!-- Фильмы будут добавляться сюда динамически -->
+                    </div>
                 </div>
             </div>
-            
         </section>
+        </div>
     </main>
 
     <!-- Подвал -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-column">
                 <div class="footer-column">
                     <h3>Следите за нами!</h3>
                     <ul>
@@ -442,8 +1083,115 @@
     </footer>
 
     <script>
-        // Простой JavaScript для демонстрации
+        // URL API бэкенда
+        const API_URL = 'http://localhost:5000';
+
+        // Карусель - автоматическая смена слайдов
+        let currentSlide = 0;
+        let carouselInterval;
+
+        // Инициализация карусели
+        function initCarousel() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicatorsContainer = document.getElementById('carouselIndicators');
+            const carouselContainer = document.querySelector('.carousel-container');
+            
+            // Создаем индикаторы
+            slides.forEach((_, index) => {
+                const indicator = document.createElement('button');
+                indicator.className = 'carousel-indicator';
+                if (index === 0) indicator.classList.add('active');
+                indicator.addEventListener('click', () => goToSlide(index));
+                indicatorsContainer.appendChild(indicator);
+            });
+
+            
+
+            // Запускаем автоматическую смену слайдов каждые 3 секунды
+            startAutoSlide();
+        }
+
+        // Функция смены слайда
+        function changeSlide(direction) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            
+            // Убираем активный класс с текущего слайда
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+            
+            // Вычисляем новый индекс слайда
+            currentSlide += direction;
+            
+            // Зацикливаем слайды
+            if (currentSlide >= slides.length) {
+                currentSlide = 0;
+            } else if (currentSlide < 0) {
+                currentSlide = slides.length - 1;
+            }
+            
+            // Добавляем активный класс к новому слайду
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+            
+            // Перезапускаем автоматическую смену
+            restartAutoSlide();
+        }
+
+        // Функция перехода к конкретному слайду
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            
+            // Убираем активный класс с текущего слайда
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+            
+            // Устанавливаем новый слайд
+            currentSlide = index;
+            
+            // Добавляем активный класс к новому слайду
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+            
+            // Перезапускаем автоматическую смену
+            restartAutoSlide();
+        }
+
+        // Запуск автоматической смены слайдов
+        function startAutoSlide() {
+            carouselInterval = setInterval(() => {
+                changeSlide(1);
+            }, 1500); // 3 секунды
+        }
+
+        // Остановка автоматической смены
+        function stopAutoSlide() {
+            if (carouselInterval) {
+                clearInterval(carouselInterval);
+            }
+        }
+
+        // Перезапуск автоматической смены
+        function restartAutoSlide() {
+            stopAutoSlide();
+            startAutoSlide();
+        }
+
+        // Функции для работы с интерфейсом
+        function toggleAdminPanel() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('active');
+        }
+
+        
+        
+
+        // Инициализация
         document.addEventListener('DOMContentLoaded', function() {
+            // Инициализация карусели
+            initCarousel();
+
             // Добавление эффекта при наведении на элементы контента
             const contentItems = document.querySelectorAll('.content-item');
             
@@ -456,7 +1204,9 @@
                     this.style.zIndex = '1';
                 });
             });
+
+            // Загрузка фильмов при загрузке страницы
+            loadMovies();
         });
     </script>
-</body>
 </html>
