@@ -87,7 +87,7 @@
         nav ul li a:hover {
             color: #869964;
         }
-        
+
         .search-bar {
             display: flex;
             align-items: center;
@@ -301,7 +301,7 @@
         
         .section-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             margin-bottom: 20px;
         }
@@ -309,6 +309,7 @@
         .section-title {
             font-size: 24px;
             font-weight: bold;
+            text-align: center;
         }
         
         .see-all {
@@ -792,9 +793,9 @@
                 <a href="#" class="logo">ㅤＫＩＮＯ ｐｏｒｔａｌ</a>
                 <nav>
                     <ul>
-                        <li><a href="#" class="logo2">Фильмы</a></li>                        
-                        <li><a href="#" class="logo2">Категории</a></li>
-                        <li><a href="#" class="logo2">Рейтингㅤ</a></li>
+                        <li><a href="#" class="logo2">Главная</a></li>                        
+                        <li><a href="#films" class="logo2">Фильмы</a></li>
+                        <li><a href="#new-films" class="logo2">Новинки</a></li>
                     </ul>
                 </nav>
             </div>
@@ -846,9 +847,12 @@
         <div class="container">
         <!---Фильмы -->
         <section class="section">
-            <div class="section-header">
-                <h2 class="section-title">Фильмы</h2>
-            </div>
+            <section>
+                <div class="section-header">
+                    <h2 class="section-title" id="films">Фильмы</h2>
+                </div>
+            </section>
+            
             <div class="content-grid">
                 <!-- Элемент фильма -->
                 <div class="content-item">
@@ -923,7 +927,7 @@
         <!-- Новые Фильмы -->
         <section class="section">
             <div class="section-header">
-                <h2 class="section-title">Новые Фильмы</h2>
+                <h2 class="section-title" id="new-films">Новые Фильмы</h2>
             </div>
             <div class="content-grid">
                 <!-- Элемент сериала -->
