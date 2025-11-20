@@ -392,6 +392,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
+
         }
         
         .footer-column h3 {
@@ -415,7 +416,7 @@
 .footer-column ul li a {
     color: #ffffff;
     font-size: 20px;
-    transition: color 0.3s;
+    transition: color 0.7s;
     font-weight: bold;
 }
 
@@ -1080,10 +1081,10 @@
                 <div class="footer-column">
                     <h3>Следите за нами!</h3>
                     <ul>
-                        <li><a href="https://t.me/NyP0g0di">ВКонтакте</a></li>
-                        <li><a href="https://t.me/NyP0g0di">Telegram</a></li>
-                        <li><a href="https://t.me/NyP0g0di">YouTube</a></li>
-                        <li><a href="https://t.me/NyP0g0di">Instagram</a></li>
+                        <li> <img src="vk_logo_icon_267616.png" alt=""><a href="https://t.me/NyP0g0di"> ВКонтакте</a></li>
+                        <li><img src="telegram_logo_icon_267615.png" alt=""><a href="https://t.me/NyP0g0di"> Telegram</a></li>
+                        <li><img src="youtube_logo_icon_267555.png" alt=""><a href="https://t.me/NyP0g0di"> YouTube</a></li>
+                        <li><img src="instagram_logo_icon_267526.png" alt=""><a href="https://t.me/NyP0g0di"> Instagram</a></li>
                     </ul>
                 </div>
             </div>
@@ -1093,6 +1094,10 @@
     <script>
         // URL API бэкенда
         const API_URL = 'http://localhost:5000';
+        
+
+        
+
 
         // Карусель - автоматическая смена слайдов
         let currentSlide = 0;
@@ -1212,9 +1217,6 @@
                     this.style.zIndex = '1';
                 });
             });
-
-            // Загрузка фильмов при загрузке страницы
-            loadMovies();
         });
     </script>
 </html>
