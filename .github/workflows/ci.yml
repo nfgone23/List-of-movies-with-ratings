@@ -62,7 +62,7 @@ jobs:
 
   test-scripts:
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, 'script') || contains(github.event.head_commit.message, 'test')
+    needs: [validate-data, check-formatting]
     
     steps:
     - name: Checkout code
@@ -75,10 +75,37 @@ jobs:
         
     - name: Test Python scripts
       run: |
+        echo "🧪 Запуск тестов скриптов..."
+        
         # Если есть Python скрипты, запускаем их с флагом --help или сухим запуском
-        for script in *.py; do
-          if [ -f "$script" ]; then
-            echo "🧪 Тестируем $script"
-            python "$script" --help || python "$script" --dry-run || echo "⚠️ Скрипт $script требует параметры"
-          fi
-        done
+        if ls *.py 1> /dev/null 2>&1; then
+          for script in *.py; do
+            if [ -f "$script" ]; then
+              echo "🧪 Тестируем $script"
+              # Пробуем разные варианты запуска
+              if python "$script" --help 2>/dev/null; then
+                echo "✅ $script: --help работает"
+              elif python "$script" --dry-run 2>/dev/null; then
+                echo "✅ $script: --dry-run работает"
+              elif python "$script" --version 2>/dev/null; then
+                echo "✅ $script: --version работает"
+              else
+                echo "⚠️ $script: требует параметры для тестирования"
+                # Пробуем просто импортировать скрипт для проверки синтаксиса
+                python -m py_compile "$script" && echo "✅ $script: синтаксис корректен"
+              fi
+            fi
+          done
+        else
+          echo "📝 Python скриптов не найдено - тесты пропущены"
+        fi
+        
+    - name: Check Python syntax
+      run: |
+        # Проверяем синтаксис всех Python файлов
+        if ls *.py 1> /dev/null 2>&1; then
+          echo "🔍 Проверяем синтаксис Python файлов..."
+          for script in *.py; do
+            python -m py_compile "$script" && echo "✅ $script: синтаксис корректен"
+          done
+        fi
