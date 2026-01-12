@@ -23,25 +23,25 @@ jobs:
       run: |
         # Проверяем существование основных файлов
         if [ ! -f "README.md" ]; then
-          echo "❌ README.md не найден"
+          echo " README.md не найден"
           exit 1
         fi
         
         # Проверяем JSON файлы (если они есть)
         if ls *.json 1> /dev/null 2>&1; then
-          echo "🔍 Проверяем JSON файлы..."
+          echo " Проверяем JSON файлы..."
           for file in *.json; do
             python -m json.tool "$file" > /dev/null || exit 1
-            echo "✅ $file - валидный JSON"
+            echo " $file - валидный JSON"
           done
         fi
         
         # Проверяем CSV файлы (если они есть)
         if ls *.csv 1> /dev/null 2>&1; then
-          echo "📊 Найдены CSV файлы"
+          echo " Найдены CSV файлы"
         fi
         
-        echo "✅ Все проверки пройдены"
+        echo " Все проверки пройдены"
 
   check-formatting:
     runs-on: ubuntu-latest
@@ -54,11 +54,11 @@ jobs:
       run: |
         # Проверяем, что нет trailing whitespace
         if grep -r '[[:space:]]$' --include="*.md" --include="*.json" --include="*.csv" .; then
-          echo "❌ Найден trailing whitespace"
+          echo " Найден trailing whitespace"
           exit 1
         fi
         
-        echo "✅ Форматирование в порядке"
+        echo " Форматирование в порядке"
 
   test-scripts:
     runs-on: ubuntu-latest
@@ -75,37 +75,37 @@ jobs:
         
     - name: Test Python scripts
       run: |
-        echo "🧪 Запуск тестов скриптов..."
+        echo " Запуск тестов скриптов..."
         
         # Если есть Python скрипты, запускаем их с флагом --help или сухим запуском
         if ls *.py 1> /dev/null 2>&1; then
           for script in *.py; do
             if [ -f "$script" ]; then
-              echo "🧪 Тестируем $script"
+              echo " Тестируем $script"
               # Пробуем разные варианты запуска
               if python "$script" --help 2>/dev/null; then
-                echo "✅ $script: --help работает"
+                echo " $script: --help работает"
               elif python "$script" --dry-run 2>/dev/null; then
-                echo "✅ $script: --dry-run работает"
+                echo " $script: --dry-run работает"
               elif python "$script" --version 2>/dev/null; then
-                echo "✅ $script: --version работает"
+                echo " $script: --version работает"
               else
-                echo "⚠️ $script: требует параметры для тестирования"
+                echo " $script: требует параметры для тестирования"
                 # Пробуем просто импортировать скрипт для проверки синтаксиса
                 python -m py_compile "$script" && echo "✅ $script: синтаксис корректен"
               fi
             fi
           done
         else
-          echo "📝 Python скриптов не найдено - тесты пропущены"
+          echo " Python скриптов не найдено - тесты пропущены"
         fi
         
     - name: Check Python syntax
       run: |
         # Проверяем синтаксис всех Python файлов
         if ls *.py 1> /dev/null 2>&1; then
-          echo "🔍 Проверяем синтаксис Python файлов..."
+          echo " Проверяем синтаксис Python файлов..."
           for script in *.py; do
-            python -m py_compile "$script" && echo "✅ $script: синтаксис корректен"
+            python -m py_compile "$script" && echo " $script: синтаксис корректен"
           done
         fi
