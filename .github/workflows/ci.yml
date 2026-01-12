@@ -92,7 +92,7 @@ jobs:
               else
                 echo " $script: требует параметры для тестирования"
                 # Пробуем просто импортировать скрипт для проверки синтаксиса
-                python -m py_compile "$script" && echo "✅ $script: синтаксис корректен"
+                python -m py_compile "$script" && echo " $script: синтаксис корректен"
               fi
             fi
           done
